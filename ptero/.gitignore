@@ -1,0 +1,12 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+
+# Output images, logs, etc.
+output/
+
+# OS files
+.DS_Store
+
+# If you have virtual-envs inside here
+venv/
