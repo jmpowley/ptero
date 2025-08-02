@@ -8,6 +8,3 @@ output/
 
 # OS files
 .DS_Store
-
-# If you have virtual-envs inside here
-venv/
