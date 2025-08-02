@@ -24,41 +24,7 @@ def is_table_fits(file_path):
                 return True
     return False
 
-def load_fits_data(filepath, xqulr, yqulr, xquan, yquan, xnum, xden, ynum, yden):
-
-    fits_list = ["S23", "O23", "Ha6563"]
-
-    # Convert between model label and fits label
-    if yqulr == "Quantity":
-        yquan_conv = convert_line_ratio_label(yquan)
-    else:
-        ynum_conv = convert_line_ratio_label(ynum)
-        yden_conv = convert_line_ratio_label(yden)
-
-    if xqulr == "Quantity":
-        xquan_conv = convert_line_ratio_label(xquan)
-    else:
-        xnum_conv = convert_line_ratio_label(xnum)
-        xden_conv = convert_line_ratio_label(xden)
-
-    with fits.open(filepath, memmap=True) as hdul:
-
-        # Select emission line ratio data from file using fits_list as key
-        # NOTE: Currently works only for S23 and O23
-        if xquan in fits_list: 
-            hdu_x_data = hdul['DIAGNOSTICS'].data
-            x_data = hdu_x_data[xquan_conv].flatten()
-        if yquan in fits_list:
-            hdu_y_data = hdul['DIAGNOSTICS'].data
-            y_data = hdu_y_data[yquan_conv].flatten()
-
-        # Extract velocity dispersion data
-        hdul_z_data = hdul["SII6716"].data
-        z_data = hdul_z_data["SIGMA"].flatten()
-
-    return x_data, y_data, z_data
-
-def load_fits_data_new(file_paths):
+def load_fits_data(file_paths):
 
     # Loop over all filenames
     for i, file_path in enumerate(file_paths):
@@ -101,30 +67,3 @@ def load_fits_mask(file_path):
         mask = hdul[0].data
 
     return mask.astype(bool)
-
-# # Test convert_line_ratio_label
-# try:
-#     print("Testing convert_line_ratio_label...")
-#     convert_line_ratio_label("O23")
-#     print("Passed!")
-# except Exception as e:
-#     print(f"Error: {e}")
-
-# # Test load_fits_data
-# filepath = "/Users/Jonah/MISCADA/Project/code/P2/code/all_maps.fits"
-# xqulr = "Quantity"
-# yqulr = "Quantity"
-# xquan = "O23"
-# yquan = "S23"
-# xnum = None
-# xden = None
-# ynum = None
-# yden = None
-
-# try:
-#     print("Testing load_fits_data...")
-#     x_data, y_data = load_fits_data(filepath, xqulr, yqulr, xquan, yquan, xnum, xden, ynum, yden)
-#     print("Passed!\n")
-#     print(np.shape(x_data), np.shape(y_data))
-# except Exception as e:
-#     print(f"Error: {e}")

@@ -1,28 +1,16 @@
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qtagg import NavigationToolbar2QT
-from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QComboBox, QHBoxLayout, QPushButton, QMessageBox, QFileDialog, QListWidget, QListWidgetItem, QSpinBox, QCheckBox
+from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QComboBox, QHBoxLayout, QPushButton, QMessageBox, QFileDialog, QSpinBox, QCheckBox
 from PyQt6.QtGui import QPixmap
 import os
 from functools import partial
 
 # Custom function declarations
-from data_io.sorting import sort_key
-from data_io.extract_values import extract_quantity, extract_line_ratio, extract_shocks
-from data_io.handle_fits_data import load_fits_data, load_fits_data_new, load_fits_mask
+from data_io.handle_fits_data import load_fits_data, load_fits_mask
 from data_io.query_3mdbs_tools import send_3mdbs_query, populate_abundance_dropdown, populate_density_dropdown, return_lines_to_query, return_quantities_to_query
 from plotter import draw_model_curves, draw_fits_points, finalize_plot
-
-# Get the base path to Allen08
-base_path = '/Users/Jonah/MISCADA/Project/code/PTERO/3mdbs_data/'
-
-# Custom quantities to plot
-custom_quantities = ['S23', 'O23']
-
-# All shocks available
-all_shocks = list(np.arange(100, 1025, 25).astype(str))
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -59,8 +47,6 @@ class MainWindow(QMainWindow):
         layout1.addWidget(QLabel('Abundance:'))
         self.abundance_combo = QComboBox()
         abundances = populate_abundance_dropdown()
-        # abun_path = base_path + 'Allen08' + '/'
-        # abundances = os.listdir(abun_path)
         self.abundance_combo.addItems(abundances)
         self.abundance_combo.currentIndexChanged.connect(self.update_dropdowns)
         layout1.addWidget(self.abundance_combo)
@@ -182,7 +168,7 @@ class MainWindow(QMainWindow):
 
         # Button to plot diagnostic
         self.plt_button = QPushButton('Plot Diagnostic', self)
-        self.plt_button.clicked.connect(self.on_plot_button_clicked)  # Connect to on_plt_button_clicked function
+        self.plt_button.clicked.connect(self.on_plot_button_clicked)  # connect to on_plt_button_clicked function
         layout3.addWidget(self.plt_button)
         
         # Add the dropdown layout to the main layout
@@ -399,7 +385,7 @@ class MainWindow(QMainWindow):
         if np.all([os.path.exists(file_path) for file_path in file_paths]):
             try:
                 # Load FITS data from files
-                self.fits_x_data, self.fits_y_data, self.fits_z_data = load_fits_data_new(file_paths)
+                self.fits_x_data, self.fits_y_data, self.fits_z_data = load_fits_data(file_paths)
                 QMessageBox.information(self, 'Success', 'FITS files loaded successfully.')
                 self.data_uploaded = True
 
