@@ -151,7 +151,7 @@ def finalize_plot(fig, ax, lc, x_lab, y_lab, abun, dens):
     - dens: selected density (string)
     """
     cbar = fig.colorbar(lc)
-    cbar.set_label('Shock velocity / kms$^{-1}$')
+    cbar.set_label('Shock velocity / km s$^{-1}$')
     ax.set_title(f'{y_lab} against {x_lab}\nAbundance = {abun}; Density = {dens} cm$^{{-3}}$')
     ax.set_xscale('log')
     ax.set_yscale('log')

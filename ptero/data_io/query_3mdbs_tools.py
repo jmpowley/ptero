@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 def format_quantity_as_sql_query(quantity):
 
     # Dict of quantities to extract using SQL queries
-    quantities = return_quantities_to_query()
+    quantities = return_quantities()
     
     # Only return SQL query if in quantities dict
     if quantity in quantities.keys():
@@ -16,7 +16,7 @@ def format_quantity_as_sql_query(quantity):
 
 def format_line_ratio_as_sql_query(num, den):
 
-    lines = return_lines_to_query()
+    lines = return_lines()
 
     if num in lines.keys() and den in lines.keys():
         print('num:', num, 'den:', den)
@@ -167,7 +167,7 @@ def populate_density_dropdown(abundance):
 
     return densities
 
-def return_lines_to_query():
+def return_lines():
 
     # All lines currently able to be calculated using SQL queries
     lines = {
@@ -180,14 +180,15 @@ def return_lines_to_query():
 
     return lines
 
-def return_quantities_to_query():
+def return_quantities():
     
     # All quantities currently able to be calculated using SQL queries
     quantities = {
         'O23': '(emis_VI.OII_7320 + emis_VI.OII_7320) / emis_VI.OIII_5007',
         'S23': '(emis_VI.SII_6716 + emis_VI.SII_6731 + emis_IR.SIII_9069) / emis_VI.HI_4861',
         'OIII_Hb': 'emis_VI.OIII_5007 / emis_VI.HI_4861',
-        'NII_Ha': 'emis_VI.NII_6583 / emis_VI.HI_6563'
+        'NII_Ha': 'emis_VI.NII_6583 / emis_VI.HI_6563',
+        'SII_Ha': '(emis_VI.SII_6716 + emis_VI.SII_6731) / emis_VI.HI_6563'
         }
     
     return quantities

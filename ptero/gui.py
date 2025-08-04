@@ -9,7 +9,7 @@ from functools import partial
 
 # Custom function declarations
 from data_io.handle_fits_data import load_fits_data, load_fits_mask
-from data_io.query_3mdbs_tools import send_3mdbs_query, populate_abundance_dropdown, populate_density_dropdown, return_lines_to_query, return_quantities_to_query
+from data_io.query_3mdbs_tools import send_3mdbs_query, populate_abundance_dropdown, populate_density_dropdown, return_lines, return_quantities
 from plotter import draw_model_curves, draw_fits_points, finalize_plot
 
 class MainWindow(QMainWindow):
@@ -253,8 +253,8 @@ class MainWindow(QMainWindow):
     def load_lines_and_quantities(self):
 
         # Extract lines and quantites from query_3mdbs_tools
-        lines = list(return_lines_to_query().keys())
-        quantities = list(return_quantities_to_query().keys())
+        lines = list(return_lines().keys())
+        quantities = list(return_quantities().keys())
 
         # Update dropdowns only if the emission lines have changed
         self.xquan_combo.clear()
