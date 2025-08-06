@@ -19,14 +19,14 @@ def format_line_ratio_as_sql_query(num, den):
     lines = return_lines()
 
     if num in lines.keys() and den in lines.keys():
-        print('num:', num, 'den:', den)
+        # print('num:', num, 'den:', den)
         sql_query = f'{lines.get(num)} / {lines.get(den)} AS {num}_{den}'
 
     return sql_query
 
 def send_3mdbs_query(xquan, yquan, xnum, xden, ynum, yden, abundance, preshck_dens, shck_vel_lo, shck_vel_hi, precursor, shock, independent):
 
-    print(xquan, yquan, xnum, xden, ynum, yden, abundance, preshck_dens, shck_vel_lo, shck_vel_hi, shock, precursor, independent)
+    # print(xquan, yquan, xnum, xden, ynum, yden, abundance, preshck_dens, shck_vel_lo, shck_vel_hi, shock, precursor, independent)
 
     # Set environment variables
     host   = os.environ['MdB_HOST']

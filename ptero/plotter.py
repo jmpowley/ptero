@@ -49,8 +49,8 @@ def draw_model_curves(ax, xqulr, yqulr, model_data_grouped, shock_data_grouped, 
 
             # Add axis labels
             if i == 0:
-                ax.set_xlabel(shck_xlab)
-                ax.set_ylabel(shck_ylab)
+                ax.set_xlabel(shck_xlab, size=18)
+                ax.set_ylabel(shck_ylab, size=18)
 
             # Add gray connection to previous dataset
             if i > 0:
@@ -118,8 +118,6 @@ def draw_fits_points(ax, fits_x, fits_y, fits_z, use_fits_mask, fits_mask, vmin,
     - vmin, vmax: numeric, for color normalization
     """
 
-    print(np.unique(fits_mask))
-
     # Apply mask if uploaded
     if use_fits_mask:
         fits_x = fits_x[~fits_mask]
@@ -151,8 +149,10 @@ def finalize_plot(fig, ax, lc, x_lab, y_lab, abun, dens):
     - dens: selected density (string)
     """
     cbar = fig.colorbar(lc)
-    cbar.set_label('Shock velocity / km s$^{-1}$')
-    ax.set_title(f'{y_lab} against {x_lab}\nAbundance = {abun}; Density = {dens} cm$^{{-3}}$')
+    cbar.set_label('Shock velocity / km s$^{-1}$', size=18)
+    cbar.ax.tick_params(labelsize=12) 
+    # ax.set_title(f'{y_lab} against {x_lab}\nAbundance = {abun}; Density = {dens} cm$^{{-3}}$', size=18)
+    ax.tick_params(axis="both", labelsize=12)
     ax.set_xscale('log')
     ax.set_yscale('log')
 
